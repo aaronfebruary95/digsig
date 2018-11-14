@@ -27,7 +27,9 @@ public class App
     {
         Security.addProvider(new BouncyCastleProvider());
         KeyPairGenerator keyGen = KeyPairGenerator.getInstance("RSA", "BC");
-        keyGen.initialize(1024);
+        /*int maxKeySize = javax.crypto.Cipher.getMaxAllowedKeyLength("AES");
+        System.out.println(maxKeySize);*/
+        keyGen.initialize(2048);
         
         KeyPair pair = keyGen.generateKeyPair();
         PrivateKey priv = pair.getPrivate();
@@ -38,7 +40,7 @@ public class App
         
         FileInputStream file = new FileInputStream("C:\\Users\\Khoa\\Desktop\\Test\\TextToSign.txt");
         BufferedInputStream buf = new BufferedInputStream(file);
-        byte[] buffer = new byte[1024];
+        byte[] buffer = new byte[2048];
         int len = 0;
         while((len = buf.read(buffer)) >= 0) {
         	sig.update(buffer, 0, len);
