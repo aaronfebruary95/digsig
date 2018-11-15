@@ -14,50 +14,64 @@ import java.security.PublicKey;
 import java.security.Security;
 import java.security.Signature;
 import java.security.SignatureException;
+import java.security.spec.InvalidKeySpecException;
+import java.util.Scanner;
 
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
+
 
 /**
  * Hello world!
  *
  */
 public class App 
-{
-    public static void main( String[] args ) throws NoSuchAlgorithmException, NoSuchProviderException, InvalidKeyException, IOException, SignatureException
-    {
-        Security.addProvider(new BouncyCastleProvider());
-        KeyPairGenerator keyGen = KeyPairGenerator.getInstance("RSA", "BC");
-        /*int maxKeySize = javax.crypto.Cipher.getMaxAllowedKeyLength("AES");
-        System.out.println(maxKeySize);*/
-        keyGen.initialize(2048);
-        
-        KeyPair pair = keyGen.generateKeyPair();
-        PrivateKey priv = pair.getPrivate();
-        PublicKey pub = pair.getPublic();
-        
-        Signature sig = Signature.getInstance("SHA1withRSA", "BC");
-        sig.initSign(priv);
-        
-        FileInputStream file = new FileInputStream("C:\\Users\\Khoa\\Desktop\\Test\\TextToSign.txt");
-        BufferedInputStream buf = new BufferedInputStream(file);
-        byte[] buffer = new byte[2048];
-        int len = 0;
-        while((len = buf.read(buffer)) >= 0) {
-        	sig.update(buffer, 0, len);
-        }
-        buf.close();
-        
-        byte[] realSig = sig.sign();
-        
-        FileOutputStream sigout = new FileOutputStream("Signature");
-        sigout.write(realSig);
-        sigout.close();
-        System.out.println("Signature saved");
-        
-        byte[] pubkey = pub.getEncoded();
-        FileOutputStream pubkeyout = new FileOutputStream("Public key");
-        pubkeyout.write(pubkey);
-        pubkeyout.close();
-        System.out.println("Public key saved");
+{	
+	
+    public static void main( String[] args ){
+    	Scanner sc = new Scanner(System.in);
+		System.out.println("\n**********Digital Signature App v1.0**********");
+		while (true) {			
+			System.out.println("\n1.Create signature for text file");
+			System.out.println("\n2.Verify signature");
+			System.out.println("\n3.Exit");
+			System.out.println("\nPlease make your choice: ");
+			int choice = sc.nextInt();
+			switch(choice) {
+			case 1:
+				try {
+					SignatureMaker sigmaker = new SignatureMaker();
+				}
+				catch(Exception e) {
+				}
+				break;
+			case 2:
+				try {
+					Verifier verifier = new Verifier();
+				}
+				catch(Exception e) {
+					
+				}
+				
+				break;
+			case 3:
+				System.out.println("Do you want to quit?(Y/N) ");
+				String choose = sc.nextLine();
+				if(choose=="Y"|choose=="y") {
+					sc.close();
+					return;
+				}
+				else break;
+			
+			default:
+				System.out.println("Do you want to quit?(Y/N) ");
+				choose = sc.nextLine();
+				if(choose=="Y"|choose=="y") {
+					sc.close();
+					return;
+				}
+				else break;
+			}	
+		}
     }
+        
 }

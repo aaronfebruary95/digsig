@@ -15,7 +15,7 @@ import java.security.spec.X509EncodedKeySpec;
 
 public class Verifier {
 	public Verifier() throws IOException, NoSuchAlgorithmException, NoSuchProviderException, InvalidKeySpecException, InvalidKeyException, SignatureException {
-		FileInputStream keyfis = new FileInputStream("Public key");
+		FileInputStream keyfis = new FileInputStream("resources/Public key.txt");
 		byte[] encKey = new byte[keyfis.available()];
 		keyfis.read(encKey);
 		keyfis.close();
@@ -24,14 +24,14 @@ public class Verifier {
 		KeyFactory keyFac = KeyFactory.getInstance("RSA", "BC");
 		PublicKey pub = keyFac.generatePublic(pubkeySpec);
 		
-		FileInputStream sigfis = new FileInputStream("Signature");
+		FileInputStream sigfis = new FileInputStream("resources/Signature.txt");
 		byte[] sigVer = new byte[sigfis.available()];
 		sigfis.read(sigVer);
 		sigfis.close();
 		Signature sig = Signature.getInstance("SHA1withRSA", "BC");
 		sig.initVerify(pub);
 		
-		FileInputStream datafis = new FileInputStream("TextToSign.txt");
+		FileInputStream datafis = new FileInputStream("resources/TextToSign.txt");
 		BufferedInputStream bufin = new BufferedInputStream(datafis);
 
 		byte[] buffer = new byte[2048];
