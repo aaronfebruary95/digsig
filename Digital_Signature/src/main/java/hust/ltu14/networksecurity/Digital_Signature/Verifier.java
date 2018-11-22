@@ -10,17 +10,22 @@ import java.security.NoSuchProviderException;
 import java.security.PublicKey;
 import java.security.Signature;
 import java.security.SignatureException;
+import java.security.spec.EncodedKeySpec;
 import java.security.spec.InvalidKeySpecException;
+import java.security.spec.KeySpec;
+import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 
 public class Verifier {
 	public Verifier() throws IOException, NoSuchAlgorithmException, NoSuchProviderException, InvalidKeySpecException, InvalidKeyException, SignatureException {
-		FileInputStream keyfis = new FileInputStream("resources/Public key.txt");
-		byte[] encKey = new byte[keyfis.available()];
+		/*FileInputStream keyfis = new FileInputStream("resources/Public key.txt");
+		byte[] encKey = new byte[2048];
+		//System.out.println(encKey);
 		keyfis.read(encKey);
+		System.out.println(encKey);
 		keyfis.close();
 		
-		X509EncodedKeySpec pubkeySpec = new X509EncodedKeySpec(encKey);
+		//KeySpec pubkeySpec = new EncodedKeySpec(encKey);
 		KeyFactory keyFac = KeyFactory.getInstance("RSA", "BC");
 		PublicKey pub = keyFac.generatePublic(pubkeySpec);
 		
@@ -45,6 +50,6 @@ public class Verifier {
 		
 		boolean verifies = sig.verify(sigVer);
 
-		System.out.println("signature verifies: " + verifies);
+		System.out.println("signature verifies: " + verifies);*/
 	}
 }
